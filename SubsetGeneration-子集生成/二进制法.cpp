@@ -28,6 +28,7 @@ int main()
 	int n;
 	scanf("%d",&n);
 //	cout<<"(1<<n)= "<<(1<<n)<<endl;
+
 	for(int i=0; i<(1<<n); i++) {
 		//	cout<<"i= "<<i<<endl;
 		print_subset(n,i);

@@ -56,7 +56,6 @@ void KMPMatcher(string text,string pattern)
 			cout<<"res= "<< i - p_length + 1 <<endl;
 			j=0;
 		}
-
 	}
 }
 
