@@ -1,4 +1,6 @@
 #include<iostream>
+#include<queue>
+#include<vector>
 using namespace std;
 
 typedef char ElemType;
@@ -61,6 +63,32 @@ void FloOrderTraverse(BiTree T, int level)
 		visit(T->data, level);
 	}
 }
+
+//层次遍历
+
+queue<BiTNode*> q;
+vector<char> ans;
+bool Hierarchy(BiTree T, int level)
+{
+	ans.clear();
+	q.push(T);
+	while(!q.empty()) {
+		BiTNode *u = q.front();
+		q.pop();
+		if(u->data == ' ')	return false;
+		ans.push_back(u->data);
+		
+		if(u->lchild != NULL)
+			q.push(u->lchild);
+		if(u->rchild != NULL)
+			q.push(u->rchild);
+		
+	}
+}
+
+
+
+
 //INPUT:
 /*ABC  D  E F  */
 //OUTPUT
@@ -86,6 +114,8 @@ B 位于第2层
 F 位于第3层
 E 位于第2层
 A 位于第1层
+层级遍历
+A B E C D F
 */
 int main(void)
 {
@@ -102,6 +132,13 @@ int main(void)
 
 	cout<<"后序遍历"<<endl;
 	FloOrderTraverse(T, level);
+
+	cout<<"层级遍历"<<endl;
+	Hierarchy(T, level);
+	for(auto i:ans){
+		cout<<i<<" ";
+	}cout<<endl;
+
 
 	return 0;
 }
