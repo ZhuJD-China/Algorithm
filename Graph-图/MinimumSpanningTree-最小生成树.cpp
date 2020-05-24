@@ -104,7 +104,8 @@ void  MiniSpanTree_Prim(Graph* G)
 			j++;
 		}
 
-		cout<<"("<<adjvex[k]<<", "<<k<<") weight="<<lowcost[k]<<endl;   //打印当前顶点边中最小的边
+		if(lowcost[k]!=0)
+			cout<<"("<<adjvex[k]<<", "<<k<<") weight="<<lowcost[k]<<endl;   //打印当前顶点边中最小的边
 
 		minimum_prim+=lowcost[k];
 
@@ -120,6 +121,7 @@ void  MiniSpanTree_Prim(Graph* G)
 	}
 }
 
+/*寻找当前结点连通图的根节点*/   // 并查集
 int Find(int *parent, int f)
 {
 	while(parent[f]>0)
@@ -132,21 +134,31 @@ int Find(int *parent, int f)
 void MiniSpanTree_Kruskal(Graph* G)
 {
 	int  parent[maxn];  // 定义parent数组用来判断边与边是否形成环路
+	int rank[maxn];    //定义连通树（快）的高度
 
-	for(int i=0; i<G->numVertexes; i++)	parent[i] = 0; //初始化数组为0
+	for(int i=0; i<G->numVertexes; i++) {
+		parent[i] = 0; //初始化数组为0
+		rank[i] = 0;
+	}
 
 	for(int i=0; i<G->numEdges; i++) {	//循环每一条边
 		int n = Find(parent, edges[i].begin); // 4 2 0 1 5 3 8 6 6 6 7
 		int m = Find(parent, edges[i].end);   // 7 8 1 5 8 7 6 6 6 7 7
 
 		if( n != m ) {	// 如果n==m，则形成环路，不满足！
-			parent[n] = m;	// 将此边的结尾顶点放入下标为起点的parent数组中，表示此顶点已经在生成树集合中
+
+			if(rank[n] > rank[m]) //连通树（快）的高度来判断谁是谁的父节点，以此压缩路径
+				parent[m] = n;	// 将此边的结尾顶点放入下标为起点的parent数组中，表示此顶点已经在生成树集合中
+			else if(rank[n] < rank[m])
+				parent[n] = m;
+			else
+				parent[n] = m;
+			rank[m]++;
+
 			printf("(%d, %d) weight=%d \n", edges[i].begin, edges[i].end, edges[i].weight);
 			minimum_Kruskal+=edges[i].weight;
 		}
 	}
-
-
 }
 
 /*
@@ -192,7 +204,7 @@ int main(void)
 	CreateGraph(&G);
 
 	cout<<endl;
-	
+
 	MiniSpanTree_Prim(&G); //prim
 	cout<<"minimum_prim= "<<minimum_prim<<endl<<endl;
 
