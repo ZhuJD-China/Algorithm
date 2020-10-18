@@ -124,7 +124,7 @@ int main(void)
     }
 
 
-    printf("-----------------");
+    printf("-----------------\n");
     for(int i=1; i<=n; i++)
     {
         cout<<A[i]<<" ";
