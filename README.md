@@ -24,11 +24,11 @@
 
 四、算法
 
-\1. 算法特征
+1. 算法特征
 
 有穷性（Finiteness）、确切性(Definiteness) 、输入项(Input)、 输出项(Output)、 可行性(Effectiveness)
 
-\2. 算法复杂度
+2. 算法复杂度
 
 五、开始讲解数据结构与算法！！！
 
